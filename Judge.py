@@ -29,14 +29,14 @@ def check_if_mixed_nash_equi(table, first_support, second_support):
     # p_i - delta >= 0 , q_i - delta >= 0
     for i in range(len(first_support) + len(second_support)):
         temp_list = [0 for _ in range(len(first_support) + len(second_support) + 1)]
-        temp_list[i] = 1
-        temp_list[len(temp_list)-1] = -1
+        temp_list[i] = -1
+        temp_list[len(temp_list) - 1] = 1
         A_ub.append(temp_list)
         b_ub.append(0)
 
     # delta >= 0
     temp_list = [0 for _ in range(len(first_support) + len(second_support))]
-    temp_list.append(1)
+    temp_list.append(-1)
     A_ub.append(temp_list)
     b_ub.append(0)
 
@@ -79,12 +79,14 @@ def check_if_mixed_nash_equi(table, first_support, second_support):
         A_eq.append(temp_list)
         b_eq.append(0)
 
-    print(first_support, second_support, A_ub, b_ub, A_eq, b_eq)
     if not A_ub == [] and not A_eq == []:
         res = linprog(c=c, A_ub=A_ub, b_ub=b_ub, A_eq=A_eq, b_eq=b_eq)
     elif not A_ub == []:
         res = linprog(c=c, A_ub=A_ub, b_ub=b_ub)
-    print(res.x)
+    if res.success:
+        if res.x[len(res.x) - 1] > 0:
+            return True, res.x
+    return False, []
 
 
 def mixed_nash_equi_finder_make_support(table, is_first, support):
@@ -102,7 +104,10 @@ def mixed_nash_equi_finder_make_support(table, is_first, support):
                     current_support[index] = 0
                     index += 1
                 current_support[index] = 1
-            output_list.append(mixed_nash_equi_finder_make_support(table, False, current_support))
+            result = mixed_nash_equi_finder_make_support(table, False, current_support)
+            if result:
+                for i in range(len(result)):
+                    output_list.append(result[i])
     else:
         current_support = [0 for _ in range(len(table[0]))]
         temporary_variable = 1
@@ -124,11 +129,31 @@ def mixed_nash_equi_finder_make_support(table, is_first, support):
             for i in range(len(current_support)):
                 if current_support[i] == 1:
                     second_support.append(i)
-            check_if_mixed_nash_equi(table, first_support, second_support)
+            if len(first_support) > 1 or len(second_support) > 1:
+                state, result = check_if_mixed_nash_equi(table, first_support, second_support)
+                if state:
+                    result_list = []
+                    index = 0
+                    for i in range(len(support)):
+                        if i in first_support:
+                            result_list.append(result[index])
+                            index += 1
+                        else:
+                            result_list.append(0)
+                    for i in range(len(current_support)):
+                        if i in second_support:
+                            result_list.append(result[index])
+                            index += 1
+                        else:
+                            result_list.append(0)
+
+                    output_list.append(result_list)
+    return output_list
 
 
-input_table = [[[3, 4], [2, 3], [3, 7]], [[4, 2], [5, 2], [5, 3]], [[6, 2], [4, 1], [2, 7]]]
+input_table = [[[31, 51], [24, 57], [32, 66], [25, 73]], [[44, 68], [12, 58], [54, 32], [20, 80]],
+               [[39, 53], [62, 50], [46, 43], [11, 78]], [[22, 30], [31, 63], [29, 54], [27, 28]]]
 output = [[[3, 1]], [[0.5, 0, 0.5, 0.75, 0.25, 0]]]
 
 print(nash_equi_finder(input_table))
-mixed_nash_equi_finder_make_support(input_table, True, [])
+print(mixed_nash_equi_finder_make_support(input_table, True, []))
