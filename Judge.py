@@ -176,7 +176,103 @@ def mixed_nash_equi_finder_make_support(table, is_first, support):
     return output_list
 
 
-def check_answer(out, nash_equis, mixed_nash_equis):
+def check_if_mixed_nash_equilibrium(table, mixed_strategy):
+    # check if each element in support has the same utility
+    p1_first_actions_utility = 0
+    p1_first_actions_index = 0
+    while mixed_strategy[p1_first_actions_index] == 0:
+        p1_first_actions_index += 1
+    for i in range(len(table[0])):
+        p1_first_actions_utility += mixed_strategy[len(table) + i] * table[p1_first_actions_index][i][0]
+    for j in range(p1_first_actions_index + 1, len(table)):
+        if mixed_strategy[j] > 0:
+            temp_utility = 0
+            for i in range(len(table[0])):
+                temp_utility += mixed_strategy[len(table) + i] * table[j][i][0]
+            if p1_first_actions_utility != temp_utility:
+                return False
+    p2_first_actions_utility = 0
+    p2_first_actions_index = len(table)
+    while mixed_strategy[p2_first_actions_index] == 0:
+        p2_first_actions_index += 1
+    for i in range(len(table)):
+        p2_first_actions_utility += mixed_strategy[i] * table[i][p2_first_actions_index - len(table)][1]
+    for j in range(p2_first_actions_index + 1, len(table) + len(table[0])):
+        if mixed_strategy[j] > 0:
+            temp_utility = 0
+            for i in range(len(table)):
+                temp_utility += mixed_strategy[i] * table[i][j][1]
+            if p2_first_actions_utility != temp_utility:
+                return False
+
+    # check if there is no strategy for each of them with higher utility
+    # for p1
+    c = []
+    for i in range(len(table)):
+        c_i = 0
+        for j in range(len(table[0])):
+            c_i += mixed_strategy[len(table) + j] * table[i][j][0]
+        c.append(c_i)
+
+    a_eq = []
+    b_eq = []
+
+    # sigma p_i = 1
+    temp_row = [1 for _ in range(len(table))]
+    a_eq.append(temp_row)
+    b_eq.append(1)
+
+    a_ub = []
+    b_ub = []
+
+    # p_i >= 0
+    for i in range(len(table)):
+        temp_row = [0 for _ in range(len(table))]
+        temp_row[i] = -1
+        a_ub.append(temp_row)
+        b_ub.append(0)
+
+    result = linprog(c, a_ub, b_ub, a_eq, b_eq)
+    if not result.success:
+        return False
+    if result.fun > p1_first_actions_utility:
+        return False
+
+    # for p2
+    c = []
+    for i in range(len(table[0])):
+        c_i = 0
+        for j in range(len(table)):
+            c_i += mixed_strategy[j] * table[j][i][1]
+        c.append(c_i)
+
+    a_eq = []
+    b_eq = []
+
+    # sigma q_i = 1
+    temp_row = [1 for _ in range(len(table[0]))]
+    a_eq.append(temp_row)
+    b_eq.append(1)
+
+    a_ub = []
+    b_ub = []
+
+    # q_i >= 0
+    for i in range(len(table[0])):
+        temp_row = [0 for _ in range(len(table[0]))]
+        temp_row[i] = -1
+        a_ub.append(temp_row)
+        b_ub.append(0)
+
+    result = linprog(c, a_ub, b_ub, a_eq, b_eq)
+    if not result.success:
+        return False
+    if result.fun > p2_first_actions_utility:
+        return False
+    return True
+
+
+def check_answer(table, out, nash_equis, mixed_nash_equis):
     simple_nash = out[0]
     if len(simple_nash) != len(nash_equis):
         return False
@@ -187,19 +283,21 @@ def check_answer(out, nash_equis, mixed_nash_equis):
     if len(mixed_nash) != len(mixed_nash_equis):
         return False
     for i in range(len(mixed_nash)):
-        if not mixed_nash[i] in mixed_nash_equis:
+        if not check_if_mixed_nash_equilibrium(table, mixed_nash[i]):
             return False
     return True
 
 
-input_table = [[[31, 51], [24, 57], [32, 66], [25, 73]], [[44, 68], [12, 58], [54, 32], [20, 80]],
-               [[39, 53], [62, 50], [46, 43], [11, 78]], [[22, 30], [31, 63], [29, 54], [27, 28]]]
-output = [[], [[0, 0, 0.5555555555555556, 0.4444444444444444, 0, 0.3404255319148936, 0, 0.6595744680851063]]]
+# input_table = [[[31, 51], [24, 57], [32, 66], [25, 73]], [[44, 68], [12, 58], [54, 32], [20, 80]],
+#                [[39, 53], [62, 50], [46, 43], [11, 78]], [[22, 30], [31, 63], [29, 54], [27, 28]]]
+input_table = [[[1, 0], [1, 0]], [[0, 0], [0, 0]]]
+output = [[[0, 0], [1, 1]], []]
 
 # print(nash_equi_finder(input_table))
-# print(mixed_nash_equi_finder_make_support(input_table, True, []))
+print(mixed_nash_equi_finder_make_support(input_table, True, []))
 
-if check_answer(output, nash_equi_finder(input_table), mixed_nash_equi_finder_make_support(input_table, True, [])):
+if check_answer(input_table, output, nash_equi_finder(input_table),
+                mixed_nash_equi_finder_make_support(input_table, True, [])):
     print("true")
 else:
     print("false")
