@@ -285,6 +285,29 @@ def check_answer(table, out, nash_equis, mixed_nash_equis):
     for i in range(len(mixed_nash)):
         if not check_if_mixed_nash_equilibrium(table, mixed_nash[i]):
             return False
+        check = False
+        first_support1 = []
+        second_support1 = []
+        for j in range(len(mixed_nash[i])):
+            if mixed_nash[i][j] > 0:
+                if j < len(table):
+                    first_support1.append(j)
+                else:
+                    second_support1.append(j - len(table))
+        for k in range(len(mixed_nash_equis)):
+            first_support2 = []
+            second_support2 = []
+            for j in range(len(mixed_nash_equis[k])):
+                if mixed_nash_equis[k][j] > 0:
+                    if j < len(table):
+                        first_support2.append(j)
+                    else:
+                        second_support2.append(j - len(table))
+            if first_support1 == first_support2 and second_support1 == second_support2:
+                mixed_nash_equis.remove(mixed_nash_equis[k])
+                check = True
+        if not check:
+            return False
     return True
 
 
