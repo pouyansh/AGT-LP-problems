@@ -161,13 +161,13 @@ def mixed_nash_equi_finder_make_support(table, is_first, support):
                     index = 0
                     for i in range(len(support)):
                         if i in first_support:
-                            result_list.append(result[index])
+                            result_list.append(round(result[index], 3))
                             index += 1
                         else:
                             result_list.append(0)
                     for i in range(len(current_support)):
                         if i in second_support:
-                            result_list.append(result[index])
+                            result_list.append(round(result[index], 3))
                             index += 1
                         else:
                             result_list.append(0)
@@ -313,11 +313,12 @@ def check_answer(table, out, nash_equis, mixed_nash_equis):
 
 # input_table = [[[31, 51], [24, 57], [32, 66], [25, 73]], [[44, 68], [12, 58], [54, 32], [20, 80]],
 #                [[39, 53], [62, 50], [46, 43], [11, 78]], [[22, 30], [31, 63], [29, 54], [27, 28]]]
-input_table = [[[1, 0], [1, 0]], [[0, 0], [0, 0]]]
+# input_table = [[[1, 0], [1, 0]], [[0, 0], [0, 0]]]
+input_table = [[[3, 4], [7, 6], [1, 5]], [[2, 4], [1, 4], [2, 6]]]
 output = [[[0, 0], [1, 1]], []]
 
 # print(nash_equi_finder(input_table))
-print(mixed_nash_equi_finder_make_support(input_table, True, []))
+print([nash_equi_finder(input_table), mixed_nash_equi_finder_make_support(input_table, True, [])])
 
 if check_answer(input_table, output, nash_equi_finder(input_table),
                 mixed_nash_equi_finder_make_support(input_table, True, [])):
