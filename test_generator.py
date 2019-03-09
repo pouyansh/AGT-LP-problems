@@ -13,7 +13,7 @@ with open("tests.txt", 'w') as file:
     while count < 6:
         acc = nprand.normal(7, 3, 1)
         acc = floor(acc[0])
-        if 14 > acc > 3:
+        if 12 > acc > 3:
             n = random.randint(2, acc - 2)
             m = acc - n
             table = [[[random.randint(1, 4), random.randint(1, 4)] for _ in range(m)] for _ in range(n)]
@@ -68,7 +68,7 @@ with open("tests.txt", 'w') as file:
     while count < 12:
         acc = nprand.normal(11, 3, 1)
         acc = floor(acc[0])
-        if 14 > acc > 9:
+        if 12 > acc > 7:
             n = random.randint(2, acc - 2)
             m = acc - n
             table = [[[random.randint(-200, 200), random.randint(-200, 200)] for _ in range(m)] for _ in range(n)]
