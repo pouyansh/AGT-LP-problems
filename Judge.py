@@ -1,6 +1,3 @@
-import time
-import unittest
-from source import main
 from scipy.optimize import linprog
 
 
@@ -320,167 +317,167 @@ def create_test_format():
             cnt += 1
 
 
-class TestMethods(unittest.TestCase):
-
-    def __init__(self, *args, **kwargs):
-        super(TestMethods, self).__init__(*args, **kwargs)
-
-    def test1(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[1, 1], [3, 2], [4, 3], [2, 1], [1, 1], [3, 1], [3, 4], [2, 2]],
-               [[3, 4], [4, 3], [4, 3], [3, 4], [3, 1], [2, 4], [2, 2], [3, 2]],
-               [[1, 2], [1, 1], [4, 4], [2, 2], [4, 1], [4, 3], [2, 3], [2, 4]],
-               [[1, 1], [3, 4], [1, 1], [1, 1], [3, 2], [2, 4], [3, 2], [2, 4]]]
-
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test2(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[2, 2], [1, 4]], [[3, 2], [2, 4]], [[1, 3], [4, 2]]]
-    
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test3(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[2, 2], [4, 1], [2, 2], [3, 3]], [[2, 2], [2, 3], [2, 3], [3, 1]], [[3, 2], [3, 1], [4, 1], [2, 3]],
-               [[4, 1], [3, 1], [2, 3], [1, 1]], [[3, 4], [1, 4], [1, 3], [3, 4]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test4(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[1, 4], [2, 2], [1, 2], [3, 1]], [[1, 2], [3, 3], [3, 3], [1, 2]], [[1, 1], [4, 1], [1, 2], [2, 2]],
-               [[1, 2], [1, 1], [3, 3], [1, 2]], [[1, 3], [1, 4], [2, 2], [2, 2]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test5(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[4, 1], [2, 4]], [[4, 2], [2, 2]], [[2, 1], [1, 4]], [[1, 2], [3, 1]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test6(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[2, 1], [3, 1], [2, 1], [2, 3], [1, 3]], [[3, 2], [3, 2], [1, 4], [4, 1], [2, 3]],
-               [[1, 2], [3, 1], [3, 1], [2, 4], [2, 3]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test7(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[134, -9], [-160, -192], [33, 5], [185, -52], [-164, 162]],
-               [[-24, -87], [149, 16], [-193, -149], [-11, 133], [-34, 83]],
-               [[179, -40], [-135, 99], [-128, 148], [-124, -104], [-197, 78]],
-               [[25, -33], [-151, 113], [-177, -113], [-138, -152], [197, -173]],
-               [[-121, -59], [-161, -21], [55, -176], [160, -74], [185, 136]],
-               [[1, 187], [58, 10], [177, 82], [-162, -148], [34, 44]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test8(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[188, 109], [-173, -43], [-56, 43], [-28, 67], [-164, -61], [-126, 11], [151, 24]],
-               [[7, 194], [169, -3], [-42, 163], [49, -178], [61, -121], [20, 93], [-192, -109]],
-               [[157, -183], [92, -171], [-58, -103], [-27, 6], [34, -146], [170, 167], [-174, 117]],
-               [[-197, -140], [45, 171], [67, -132], [131, 80], [116, -5], [189, 40], [172, 132]],
-               [[-91, -26], [-74, 177], [179, -165], [-67, 109], [91, -154], [164, 187], [-180, 106]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test9(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[-108, 40], [14, 115], [-20, -82], [-94, -152], [-93, -169]],
-               [[68, 6], [50, -63], [103, 173], [-78, 192], [-99, -118]],
-               [[153, -160], [-74, 100], [-165, 84], [42, 129], [-110, -5]],
-               [[40, 49], [-189, 75], [164, -78], [-109, 177], [-98, -200]],
-               [[-171, -37], [37, -129], [-11, 47], [-139, 128], [-29, 95]],
-               [[48, 172], [-195, 42], [106, 112], [50, -88], [107, -177]],
-               [[68, 42], [-34, -10], [23, 147], [147, -14], [-168, -72]],
-               [[68, 157], [63, -130], [-19, -65], [86, -76], [121, 33]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test10(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[179, -37], [190, 39], [116, 3], [-136, 74]], [[109, -188], [137, -24], [-177, -46], [173, -84]],
-               [[108, 188], [143, -130], [-138, 55], [-193, 96]], [[-163, 152], [-160, -126], [-87, 121], [12, 104]],
-               [[-182, 174], [139, -123], [142, 72], [-27, 55]], [[118, 71], [94, 76], [22, -129], [113, 192]],
-               [[-37, -15], [130, -37], [60, 117], [190, 81]], [[58, 140], [167, -179], [-49, -110], [-35, 115]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test11(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[-113, 20], [59, 117], [56, 125], [-187, 174], [22, -59]],
-               [[-122, 96], [100, -162], [4, 197], [138, -143], [23, -68]],
-               [[-127, -130], [-49, -89], [117, 80], [196, 151], [-49, 156]],
-               [[-34, 123], [-61, -96], [-91, 112], [-37, 76], [-64, 74]],
-               [[-38, -19], [-197, 144], [-101, 121], [-13, 185], [172, -53]],
-               [[86, -158], [86, -182], [-115, -157], [167, 184], [-188, -56]]]
-        
-        result = main(inp)
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        self.assertLess(passed_time, time_limit)
-
-    def test12(self):
-        time_limit = 30
-        start_time = time.time()
-        inp = [[[130, -98], [-39, 141], [-187, -101], [-62, 42], [112, -37]],
-               [[-40, -11], [-172, -64], [-39, -17], [-187, -176], [103, 163]],
-               [[-77, -59], [-89, -16], [-85, -118], [72, 19], [61, 138]],
-               [[42, 62], [129, -66], [-49, 61], [-94, 150], [-89, 172]],
-               [[144, 169], [-78, -70], [-118, 154], [-130, 93], [-176, -161]],
-               [[115, -69], [-35, 196], [71, 200], [158, 17], [90, 63]]]
-        
-        result = main(inp)
-        print(check_answer(inp, result))
-        self.assertEqual(check_answer(inp, result), True)
-        passed_time = time.time() - start_time
-        print(passed_time)
-        self.assertLess(passed_time, time_limit)
+# class TestMethods(unittest.TestCase):
+#
+#     def __init__(self, *args, **kwargs):
+#         super(TestMethods, self).__init__(*args, **kwargs)
+#
+#     def test1(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[1, 1], [3, 2], [4, 3], [2, 1], [1, 1], [3, 1], [3, 4], [2, 2]],
+#                [[3, 4], [4, 3], [4, 3], [3, 4], [3, 1], [2, 4], [2, 2], [3, 2]],
+#                [[1, 2], [1, 1], [4, 4], [2, 2], [4, 1], [4, 3], [2, 3], [2, 4]],
+#                [[1, 1], [3, 4], [1, 1], [1, 1], [3, 2], [2, 4], [3, 2], [2, 4]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test2(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[2, 2], [1, 4]], [[3, 2], [2, 4]], [[1, 3], [4, 2]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test3(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[2, 2], [4, 1], [2, 2], [3, 3]], [[2, 2], [2, 3], [2, 3], [3, 1]], [[3, 2], [3, 1], [4, 1], [2, 3]],
+#                [[4, 1], [3, 1], [2, 3], [1, 1]], [[3, 4], [1, 4], [1, 3], [3, 4]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test4(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[1, 4], [2, 2], [1, 2], [3, 1]], [[1, 2], [3, 3], [3, 3], [1, 2]], [[1, 1], [4, 1], [1, 2], [2, 2]],
+#                [[1, 2], [1, 1], [3, 3], [1, 2]], [[1, 3], [1, 4], [2, 2], [2, 2]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test5(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[4, 1], [2, 4]], [[4, 2], [2, 2]], [[2, 1], [1, 4]], [[1, 2], [3, 1]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test6(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[2, 1], [3, 1], [2, 1], [2, 3], [1, 3]], [[3, 2], [3, 2], [1, 4], [4, 1], [2, 3]],
+#                [[1, 2], [3, 1], [3, 1], [2, 4], [2, 3]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test7(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[134, -9], [-160, -192], [33, 5], [185, -52], [-164, 162]],
+#                [[-24, -87], [149, 16], [-193, -149], [-11, 133], [-34, 83]],
+#                [[179, -40], [-135, 99], [-128, 148], [-124, -104], [-197, 78]],
+#                [[25, -33], [-151, 113], [-177, -113], [-138, -152], [197, -173]],
+#                [[-121, -59], [-161, -21], [55, -176], [160, -74], [185, 136]],
+#                [[1, 187], [58, 10], [177, 82], [-162, -148], [34, 44]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test8(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[188, 109], [-173, -43], [-56, 43], [-28, 67], [-164, -61], [-126, 11], [151, 24]],
+#                [[7, 194], [169, -3], [-42, 163], [49, -178], [61, -121], [20, 93], [-192, -109]],
+#                [[157, -183], [92, -171], [-58, -103], [-27, 6], [34, -146], [170, 167], [-174, 117]],
+#                [[-197, -140], [45, 171], [67, -132], [131, 80], [116, -5], [189, 40], [172, 132]],
+#                [[-91, -26], [-74, 177], [179, -165], [-67, 109], [91, -154], [164, 187], [-180, 106]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test9(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[-108, 40], [14, 115], [-20, -82], [-94, -152], [-93, -169]],
+#                [[68, 6], [50, -63], [103, 173], [-78, 192], [-99, -118]],
+#                [[153, -160], [-74, 100], [-165, 84], [42, 129], [-110, -5]],
+#                [[40, 49], [-189, 75], [164, -78], [-109, 177], [-98, -200]],
+#                [[-171, -37], [37, -129], [-11, 47], [-139, 128], [-29, 95]],
+#                [[48, 172], [-195, 42], [106, 112], [50, -88], [107, -177]],
+#                [[68, 42], [-34, -10], [23, 147], [147, -14], [-168, -72]],
+#                [[68, 157], [63, -130], [-19, -65], [86, -76], [121, 33]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test10(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[179, -37], [190, 39], [116, 3], [-136, 74]], [[109, -188], [137, -24], [-177, -46], [173, -84]],
+#                [[108, 188], [143, -130], [-138, 55], [-193, 96]], [[-163, 152], [-160, -126], [-87, 121], [12, 104]],
+#                [[-182, 174], [139, -123], [142, 72], [-27, 55]], [[118, 71], [94, 76], [22, -129], [113, 192]],
+#                [[-37, -15], [130, -37], [60, 117], [190, 81]], [[58, 140], [167, -179], [-49, -110], [-35, 115]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test11(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[-113, 20], [59, 117], [56, 125], [-187, 174], [22, -59]],
+#                [[-122, 96], [100, -162], [4, 197], [138, -143], [23, -68]],
+#                [[-127, -130], [-49, -89], [117, 80], [196, 151], [-49, 156]],
+#                [[-34, 123], [-61, -96], [-91, 112], [-37, 76], [-64, 74]],
+#                [[-38, -19], [-197, 144], [-101, 121], [-13, 185], [172, -53]],
+#                [[86, -158], [86, -182], [-115, -157], [167, 184], [-188, -56]]]
+#
+#         result = main(inp)
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         self.assertLess(passed_time, time_limit)
+#
+#     def test12(self):
+#         time_limit = 30
+#         start_time = time.time()
+#         inp = [[[130, -98], [-39, 141], [-187, -101], [-62, 42], [112, -37]],
+#                [[-40, -11], [-172, -64], [-39, -17], [-187, -176], [103, 163]],
+#                [[-77, -59], [-89, -16], [-85, -118], [72, 19], [61, 138]],
+#                [[42, 62], [129, -66], [-49, 61], [-94, 150], [-89, 172]],
+#                [[144, 169], [-78, -70], [-118, 154], [-130, 93], [-176, -161]],
+#                [[115, -69], [-35, 196], [71, 200], [158, 17], [90, 63]]]
+#
+#         result = main(inp)
+#         print(check_answer(inp, result))
+#         self.assertEqual(check_answer(inp, result), True)
+#         passed_time = time.time() - start_time
+#         print(passed_time)
+#         self.assertLess(passed_time, time_limit)
 
 # print(nash_equi_finder(input_table))
 # print([nash_equi_finder(input_table),
