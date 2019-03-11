@@ -71,7 +71,7 @@ with open("tests.txt", 'w') as file:
         if 12 > acc > 7:
             n = random.randint(2, acc - 2)
             m = acc - n
-            table = [[[random.randint(-200, 200), random.randint(-200, 200)] for _ in range(m)] for _ in range(n)]
+            table = [[[random.randint(0, 400), random.randint(0, 400)] for _ in range(m)] for _ in range(n)]
             mixeds = mixed_nash_equi_finder_make_support(table, True, [], nash_equi_finder(table))
             min_s = acc
             if len(mixeds) > 0:

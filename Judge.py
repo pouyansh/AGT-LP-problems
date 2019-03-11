@@ -191,13 +191,16 @@ def check_if_mixed_nash_equilibrium(table, mixed_strategy):
         p1_first_actions_index += 1
     for i in range(len(table[0])):
         p1_first_actions_utility += mixed_strategy[len(table) + i] * table[p1_first_actions_index][i][0]
+    print(p1_first_actions_utility)
     for j in range(p1_first_actions_index + 1, len(table)):
         if mixed_strategy[j] > 0:
             temp_utility = 0
             for i in range(len(table[0])):
                 temp_utility += mixed_strategy[len(table) + i] * table[j][i][0]
+            print(temp_utility)
             if abs(p1_first_actions_utility - temp_utility) > 1e-2:
                 return False
+    print("ok11")
     p2_first_actions_utility = 0
     p2_first_actions_index = len(table)
     while mixed_strategy[p2_first_actions_index] == 0.0:
@@ -211,7 +214,7 @@ def check_if_mixed_nash_equilibrium(table, mixed_strategy):
                 temp_utility += mixed_strategy[i] * table[i][j - len(table)][1]
             if abs(p2_first_actions_utility - temp_utility) > 1e-2:
                 return False
-
+    print("ok12")
     # print(p1_first_actions_index, p1_first_actions_utility, p2_first_actions_index, p2_first_actions_utility)
     # check if there is no strategy for each of them with higher utility
     # for p1
@@ -282,17 +285,22 @@ def check_if_mixed_nash_equilibrium(table, mixed_strategy):
 
 def check_answer(table, out):
     nash_equis = nash_equi_finder(table)
+    print(nash_equis)
     simple_nash = out[0]
     if len(simple_nash) != len(nash_equis):
         return False
+    print("ok1")
     for i in range(len(simple_nash)):
         if not simple_nash[i] in nash_equis:
             return False
+    print("ok2")
     mixed_nash = out[1]
     for i in range(len(out[2])):
         mixed_nash.append(out[2][i])
+    print(mixed_nash)
     if not check_if_mixed_nash_equilibrium(table, mixed_nash):
         return False
+    print("ok3")
     for i in range(len(nash_equis)):
         if out[1][nash_equis[i][0]] > 0 and out[2][nash_equis[i][1]] > 0:
             return False
@@ -308,11 +316,11 @@ def create_test_format():
                   "\t\ttime_limit = 30 \n",
                   "\t\tstart_time = time.time() \n ",
                   "\t\tinp = ", line,
-                  "\n\t\tresult = main(inp)",
+                  "\n\t\tresult = main(inp)\n",
                   "\t\tself.assertEqual(check_answer(inp, result), True) \n",
 
                   "\t\tpassed_time = time.time() - start_time \n",
-                  "\t\tself.assertLess(passed_time, time_limit)")
+                  "\t\tself.assertLess(passed_time, time_limit)\n", sep='')
             line = f.readline()
             cnt += 1
 
@@ -492,3 +500,6 @@ def create_test_format():
 
 
 # create_test_format()
+
+print(check_answer([[[376, 9], [32, 0], [20, 217], [251, 18]], [[245, 286], [353, 219], [159, 27], [320, 119]],
+               [[327, 238], [293, 316], [4, 99], [38, 97]], [[248, 209], [261, 40], [25, 2], [97, 60]]], [[], [0.48580363756069456, 0.24644885194634183, 0.2677475104929635, 0], [0.6021022330774598, 0.12949232379623166, 0.2684054431263085, 0]]))
